@@ -1,27 +1,51 @@
 #include "com_isans_cris_CRISAndroid.h"
-#include <android/log.h>
 
 #include "iClebo.h"
-
-//==============================
-// Declarations
-//==============================
-#define LOG_TAG "cris.cpp"
-#define DPRINTF(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define IPRINTF(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-#define EPRINTF(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
 static CGenericRobot* robot = NULL;
 
 extern "C"{
 	jint JNI_OnLoad(JavaVM* vm, void* reserved)
 	{
+		DPRINTF("__FUNCTION__ test ==> %s", __FUNCTION__);
 		robot = reinterpret_cast<CUnicycleRobot*>(new iClebo);
+		DPRINTF("%s", __FUNCTION__);
 		return JNI_VERSION_1_4;
 	}
 } // extern "C"
+/*
+ * Class:     com_isans_cris_CRISAndroid
+ * Method:    GetState
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_isans_cris_CRISAndroid_GetState
+  (JNIEnv *, jobject)
+{
+	return robot->getState();
+}
 
+/*
+ * Class:     com_isans_cris_CRISAndroid
+ * Method:    GetProcessRate
+ * Signature: ()D
+ */
+JNIEXPORT jdouble JNICALL Java_com_isans_cris_CRISAndroid_GetProcessRate
+  (JNIEnv *, jobject)
+{
+	return robot->getProcessRate();
+}
 
+/*
+ * Class:     com_isans_cris_CRISAndroid
+ * Method:    GetVendorID
+ * Signature: ()Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_isans_cris_CRISAndroid_GetVendorID
+  (JNIEnv* env, jobject)
+{
+	std::string id = robot->getVendorID();
+	return env->NewStringUTF(id.c_str());
+}
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    SendData
@@ -52,8 +76,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_isans_cris_CRISAndroid_GetData
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_Initialize
   (JNIEnv *, jobject)
 {
-	if(robot)
-		robot->initialize();
+	return robot->initialize();
 }
 
 /*
@@ -64,9 +87,9 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_Initialize
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_MoveForward
   (JNIEnv *, jobject)
 {
-	if(robot)
-		robot->MoveForward();
+	return robot->MoveForward();
 }
+
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    MoveBackward
@@ -75,8 +98,7 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_MoveForward
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_MoveBackward
   (JNIEnv *, jobject)
 {
-	if(robot)
-		robot->MoveBackward();
+	return robot->MoveBackward();
 }
 
 /*
@@ -87,7 +109,7 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_MoveBackward
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_TurnLeft
   (JNIEnv *, jobject)
 {
-
+	return robot->TurnLeft();
 }
 
 /*
@@ -98,7 +120,7 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_TurnLeft
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_TurnRight
   (JNIEnv *, jobject)
 {
-
+	return robot->TurnRight();
 }
 
 /*
@@ -107,9 +129,9 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_TurnRight
  * Signature: (D)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_MoveDelta
-  (JNIEnv *, jobject, jdouble)
+  (JNIEnv *, jobject, jdouble delta)
 {
-
+	return robot->MoveDelta(delta);
 }
 
 /*
@@ -118,20 +140,20 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_MoveDelta
  * Signature: (D)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_TurnDelta
-  (JNIEnv *, jobject, jdouble)
+  (JNIEnv *, jobject, jdouble delta)
 {
-
+	return robot->TurnDelta(delta);
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GoToPose
- * Signature: (Ljava/util/Vector;)Z
+ * Signature: (DDD)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_GoToPose
-  (JNIEnv *, jobject, jobject)
+  (JNIEnv *, jobject, jdouble x, jdouble y, jdouble theta)
 {
-
+	return robot->GoToPose( Pose(x,y,theta) );
 }
 
 /*
@@ -142,7 +164,7 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_GoToPose
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_Stop
   (JNIEnv *, jobject)
 {
-
+	return robot->Stop();
 }
 
 /*
@@ -151,9 +173,9 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_Stop
  * Signature: (I)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_SetLed
-  (JNIEnv *, jobject, jint)
+  (JNIEnv *, jobject, jint which)
 {
-
+	return robot->SetLed(which);
 }
 
 /*
@@ -162,9 +184,9 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_SetLed
  * Signature: (I)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_Command
-  (JNIEnv *, jobject, jint)
+  (JNIEnv *, jobject, jint cmd)
 {
-
+	return robot->Command(cmd);
 }
 
 /*
@@ -173,9 +195,9 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_Command
  * Signature: (D)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_MoveDeltaB
-  (JNIEnv *, jobject, jdouble)
+  (JNIEnv *, jobject, jdouble delta)
 {
-
+	return robot->MoveDeltaB(delta);
 }
 
 /*
@@ -184,95 +206,157 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_MoveDeltaB
  * Signature: (D)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_TurnDeltaB
-  (JNIEnv *, jobject, jdouble)
+  (JNIEnv *, jobject, jdouble delta)
 {
-
+	return robot->TurnDeltaB(delta);
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GoToPoseB
- * Signature: (Ljava/util/Vector;)Z
+ * Signature: (DDD)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_GoToPoseB
-  (JNIEnv *, jobject, jobject)
+  (JNIEnv *, jobject, jdouble x, jdouble y, jdouble theta)
 {
-
+	return robot->GoToPoseB( Pose(x,y,theta) );
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    SetMaxVelocity
- * Signature: (Ljava/util/Vector;)Z
+ * Signature: (DD)V
  */
-JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_SetMaxVelocity
-  (JNIEnv *, jobject, jobject)
+JNIEXPORT void JNICALL Java_com_isans_cris_CRISAndroid_SetMaxVelocity
+  (JNIEnv *, jobject, jdouble linear, jdouble angular)
 {
-
+	robot->SetMaxVelocity( Polar(linear, angular) );
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GetMaxVelocity
- * Signature: ()Ljava/util/Vector;
+ * Signature: ()[D
  */
-JNIEXPORT jobject JNICALL Java_com_isans_cris_CRISAndroid_GetMaxVelocity
-  (JNIEnv *, jobject)
+JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetMaxVelocity
+  (JNIEnv* env, jobject)
 {
+	Polar polar = robot->GetMaxVelocity();
+	jdoubleArray result_arr;
+	jdouble* arr_elems;
 
+	jboolean isCopy;
+	result_arr = env->NewDoubleArray(2);
+	arr_elems = env->GetDoubleArrayElements(result_arr, &isCopy);
+
+	arr_elems[0] = polar.linear;
+	arr_elems[1] = polar.angular;
+
+	if (isCopy == JNI_TRUE) {
+		env->ReleaseDoubleArrayElements(result_arr, arr_elems, 0);
+	}
+	return result_arr;
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    SetMaxAcceleration
- * Signature: (Ljava/util/Vector;)V
+ * Signature: (DD)V
  */
 JNIEXPORT void JNICALL Java_com_isans_cris_CRISAndroid_SetMaxAcceleration
-  (JNIEnv *, jobject, jobject)
+  (JNIEnv *, jobject, jdouble linear, jdouble angular)
 {
-
+	robot->SetMaxAcceleration( Polar(linear, angular) );
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GetMaxAcceleration
- * Signature: ()Ljava/util/Vector;
+ * Signature: ()[D
  */
-JNIEXPORT jobject JNICALL Java_com_isans_cris_CRISAndroid_GetMaxAcceleration
-  (JNIEnv *, jobject)
+JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetMaxAcceleration
+  (JNIEnv* env, jobject)
 {
+	Polar polar = robot->GetMaxAcceleration();
+	jdoubleArray result_arr;
+	jdouble* arr_elems;
 
+	jboolean isCopy;
+	result_arr = env->NewDoubleArray(2);
+	arr_elems = env->GetDoubleArrayElements(result_arr, &isCopy);
+
+	arr_elems[0] = polar.linear;
+	arr_elems[1] = polar.angular;
+
+	if (isCopy == JNI_TRUE) {
+		env->ReleaseDoubleArrayElements(result_arr, arr_elems, 0);
+	}
+	return result_arr;
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    SetVelocity
- * Signature: (Ljava/util/Vector;)V
+ * Signature: (DD)V
  */
 JNIEXPORT void JNICALL Java_com_isans_cris_CRISAndroid_SetVelocity
-  (JNIEnv *, jobject, jobject)
+  (JNIEnv *, jobject, jdouble linear, jdouble angular)
 {
-
+	robot->SetVelocity( Polar(linear,angular) );
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GetVelocity
- * Signature: ()Ljava/util/Vector;
+ * Signature: ()[D
  */
-JNIEXPORT jobject JNICALL Java_com_isans_cris_CRISAndroid_GetVelocity
-  (JNIEnv *, jobject)
+JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetVelocity
+  (JNIEnv* env, jobject)
 {
+	Polar polar = robot->GetVelocity();
 
+	jdoubleArray result_arr;
+	jdouble* arr_elems;
+
+	jboolean isCopy;
+	result_arr = env->NewDoubleArray(2);
+	arr_elems = env->GetDoubleArrayElements(result_arr, &isCopy);
+
+	arr_elems[0] = polar.linear;
+	arr_elems[1] = polar.angular;
+
+	if (isCopy == JNI_TRUE) {
+		env->ReleaseDoubleArrayElements(result_arr, arr_elems, 0);
+	}
+	return result_arr;
 }
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GetMap
- * Signature: ()Ljava/util/Vector;
+ * Signature: ()[D
  */
-JNIEXPORT jobject JNICALL Java_com_isans_cris_CRISAndroid_GetMap
-  (JNIEnv *, jobject)
+JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetMap
+  (JNIEnv* env, jobject)
 {
+	std::vector<PointInfo> info = robot->GetMap();
+	jdoubleArray result_arr;
+	jdouble* arr_elems;
 
+	jboolean isCopy;
+	result_arr = env->NewDoubleArray(info.size()*3);
+	arr_elems = env->GetDoubleArrayElements(result_arr, &isCopy);
+
+	for(int i = 0; i < info.size(); i++){
+		arr_elems[i*3+0] = info[i].x;
+		arr_elems[i*3+1] = info[i].y;
+		arr_elems[i*3+2] = info[i].state;
+	}
+
+	if (isCopy == JNI_TRUE) {
+		env->ReleaseDoubleArrayElements(result_arr, arr_elems, 0);
+	}
+	return result_arr;
 }
+
+

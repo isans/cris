@@ -9,6 +9,30 @@ extern "C" {
 #endif
 /*
  * Class:     com_isans_cris_CRISAndroid
+ * Method:    GetState
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_isans_cris_CRISAndroid_GetState
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_isans_cris_CRISAndroid
+ * Method:    GetProcessRate
+ * Signature: ()D
+ */
+JNIEXPORT jdouble JNICALL Java_com_isans_cris_CRISAndroid_GetProcessRate
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_isans_cris_CRISAndroid
+ * Method:    GetVendorID
+ * Signature: ()Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_isans_cris_CRISAndroid_GetVendorID
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_isans_cris_CRISAndroid
  * Method:    SendData
  * Signature: ([B)I
  */
@@ -82,10 +106,10 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_TurnDelta
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GoToPose
- * Signature: (Ljava/util/Vector;)Z
+ * Signature: (DDD)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_GoToPose
-  (JNIEnv *, jobject, jobject);
+  (JNIEnv *, jobject, jdouble, jdouble, jdouble);
 
 /*
  * Class:     com_isans_cris_CRISAndroid
@@ -130,65 +154,65 @@ JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_TurnDeltaB
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GoToPoseB
- * Signature: (Ljava/util/Vector;)Z
+ * Signature: (DDD)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_GoToPoseB
-  (JNIEnv *, jobject, jobject);
+  (JNIEnv *, jobject, jdouble, jdouble, jdouble);
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    SetMaxVelocity
- * Signature: (Ljava/util/Vector;)Z
+ * Signature: (DD)V
  */
-JNIEXPORT jboolean JNICALL Java_com_isans_cris_CRISAndroid_SetMaxVelocity
-  (JNIEnv *, jobject, jobject);
+JNIEXPORT void JNICALL Java_com_isans_cris_CRISAndroid_SetMaxVelocity
+  (JNIEnv *, jobject, jdouble, jdouble);
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GetMaxVelocity
- * Signature: ()Ljava/util/Vector;
+ * Signature: ()[D
  */
-JNIEXPORT jobject JNICALL Java_com_isans_cris_CRISAndroid_GetMaxVelocity
+JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetMaxVelocity
   (JNIEnv *, jobject);
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    SetMaxAcceleration
- * Signature: (Ljava/util/Vector;)V
+ * Signature: (DD)V
  */
 JNIEXPORT void JNICALL Java_com_isans_cris_CRISAndroid_SetMaxAcceleration
-  (JNIEnv *, jobject, jobject);
+  (JNIEnv *, jobject, jdouble, jdouble);
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GetMaxAcceleration
- * Signature: ()Ljava/util/Vector;
+ * Signature: ()[D
  */
-JNIEXPORT jobject JNICALL Java_com_isans_cris_CRISAndroid_GetMaxAcceleration
+JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetMaxAcceleration
   (JNIEnv *, jobject);
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    SetVelocity
- * Signature: (Ljava/util/Vector;)V
+ * Signature: (DD)V
  */
 JNIEXPORT void JNICALL Java_com_isans_cris_CRISAndroid_SetVelocity
-  (JNIEnv *, jobject, jobject);
+  (JNIEnv *, jobject, jdouble, jdouble);
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GetVelocity
- * Signature: ()Ljava/util/Vector;
+ * Signature: ()[D
  */
-JNIEXPORT jobject JNICALL Java_com_isans_cris_CRISAndroid_GetVelocity
+JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetVelocity
   (JNIEnv *, jobject);
 
 /*
  * Class:     com_isans_cris_CRISAndroid
  * Method:    GetMap
- * Signature: ()Ljava/util/Vector;
+ * Signature: ()[D
  */
-JNIEXPORT jobject JNICALL Java_com_isans_cris_CRISAndroid_GetMap
+JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetMap
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

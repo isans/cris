@@ -34,6 +34,7 @@ public:
 	}
 	bool initialize(){
 		// code here.
+
 		return true;
 	}
 	void doProcess(){
@@ -47,6 +48,7 @@ public:
 protected:
 
 	bool ControlVelocity(Polar velocity){
+		DPRINTF("linear:%f, angular:%f, %s", velocity.linear, velocity.angular, __FUNCTION__);
 		DiffDriveWheel wheelVel;
 		DiffDriveKinematics::Inverse(velocity, wheel_base, wheelVel);
 		// code here

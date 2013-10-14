@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include "CPoses.h"
+#include "macros.h"
 
 #include <boost/noncopyable.hpp>
 

@@ -51,18 +51,19 @@ class PointInfo : public Point
 {
 public:
 	PointInfo() { x = y = 0;
-	type = -1;
+	state = -1;
 	}
 	PointInfo(double x, double y, int type)
 	{
 		this->x = x;
 		this->y = y;
-		this->type = type;
+		this->state = state;
 	}
-	bool operator==(const PointInfo& rhs) const { return (x == rhs.x) && (y == rhs.y) && (type == rhs.type); }
-    bool operator!=(const PointInfo& rhs) const { return (x != rhs.x) || (y != rhs.y) || (type != rhs.type); }
-protected:
-	int type;
+	bool operator==(const PointInfo& rhs) const { return (x == rhs.x) && (y == rhs.y) && (state == rhs.state); }
+    bool operator!=(const PointInfo& rhs) const { return (x != rhs.x) || (y != rhs.y) || (state != rhs.state); }
+
+    // 청소 상태
+    int state;
 };
 /**
  * <B>2D Pose in Rectangular Coordinates</B>
