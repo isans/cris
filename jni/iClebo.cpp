@@ -46,27 +46,6 @@ JNIEXPORT jstring JNICALL Java_com_isans_cris_CRISAndroid_GetVendorID
 	std::string id = robot->getVendorID();
 	return env->NewStringUTF(id.c_str());
 }
-/*
- * Class:     com_isans_cris_CRISAndroid
- * Method:    SendData
- * Signature: ([B)I
- */
-JNIEXPORT jint JNICALL Java_com_isans_cris_CRISAndroid_SendData
-  (JNIEnv *, jclass, jbyteArray)
-{
-
-}
-
-/*
- * Class:     com_isans_cris_CRISAndroid
- * Method:    GetData
- * Signature: ()[B
- */
-JNIEXPORT jbyteArray JNICALL Java_com_isans_cris_CRISAndroid_GetData
-  (JNIEnv *, jclass)
-{
-
-}
 
 /*
  * Class:     com_isans_cris_CRISAndroid
@@ -350,7 +329,8 @@ JNIEXPORT jdoubleArray JNICALL Java_com_isans_cris_CRISAndroid_GetMap
 	for(int i = 0; i < info.size(); i++){
 		arr_elems[i*3+0] = info[i].x;
 		arr_elems[i*3+1] = info[i].y;
-		arr_elems[i*3+2] = info[i].state;
+		arr_elems[i*3+2] = info[i].flag;
+		arr_elems[i*3+3] = info[i].wall;
 	}
 
 	if (isCopy == JNI_TRUE) {

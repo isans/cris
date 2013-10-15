@@ -33,22 +33,6 @@ JNIEXPORT jstring JNICALL Java_com_isans_cris_CRISAndroid_GetVendorID
 
 /*
  * Class:     com_isans_cris_CRISAndroid
- * Method:    SendData
- * Signature: ([B)I
- */
-JNIEXPORT jint JNICALL Java_com_isans_cris_CRISAndroid_SendData
-  (JNIEnv *, jclass, jbyteArray);
-
-/*
- * Class:     com_isans_cris_CRISAndroid
- * Method:    GetData
- * Signature: ()[B
- */
-JNIEXPORT jbyteArray JNICALL Java_com_isans_cris_CRISAndroid_GetData
-  (JNIEnv *, jclass);
-
-/*
- * Class:     com_isans_cris_CRISAndroid
  * Method:    Initialize
  * Signature: ()Z
  */

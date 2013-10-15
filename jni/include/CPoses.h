@@ -51,19 +51,19 @@ class PointInfo : public Point
 {
 public:
 	PointInfo() { x = y = 0;
-	state = -1;
+	flag = -1;
 	}
-	PointInfo(double x, double y, int type)
+	PointInfo(double x, double y, int flag)
 	{
 		this->x = x;
 		this->y = y;
-		this->state = state;
+		this->flag = flag;
 	}
-	bool operator==(const PointInfo& rhs) const { return (x == rhs.x) && (y == rhs.y) && (state == rhs.state); }
-    bool operator!=(const PointInfo& rhs) const { return (x != rhs.x) || (y != rhs.y) || (state != rhs.state); }
+	bool operator==(const PointInfo& rhs) const { return (x == rhs.x) && (y == rhs.y) && (flag == rhs.flag); }
+    bool operator!=(const PointInfo& rhs) const { return (x != rhs.x) || (y != rhs.y) || (flag != rhs.flag); }
 
     // 청소 상태
-    int state;
+    int flag;
     int wall;
 };
 /**
