@@ -3,6 +3,11 @@ cris
 
 RSP와 로봇과의 통신을 위한 공통 API
 
+>11:16 오후 화요일, 10월 15, 2013
+
+![cris class diagram](http://farm4.staticflickr.com/3740/10292094013_f53d94d1e8.jpg)
+
+
 > 11:51 오후 일요일, 10월 13, 2013
 
 **작업 환경** 
