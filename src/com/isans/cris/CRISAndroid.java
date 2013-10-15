@@ -3,6 +3,7 @@ package com.isans.cris;
 import java.io.IOException;
 import java.util.Vector;
 
+import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
@@ -19,10 +20,20 @@ public class CRISAndroid {
 	private UsbDeviceConnection usbConnection;
 	private UsbEndpoint endInpoint;
 	private UsbEndpoint endOutpoint;
-	private UsbInterface intf;
+	private UsbInterface usbInterface;
 	
 	public CRISAndroid(){
+		sendQueue = new RequestQueue();
 		sendHandler = new Thread(new SenderThread());
+	}
+	// {1}
+	public void ConnectedUsbDevice(UsbDeviceConnection connection, UsbInterface usbInterface) {
+		usbConnection = connection;
+		this.usbInterface = usbInterface;
+		endOutpoint = usbInterface.getEndpoint(1);
+		endInpoint = usbInterface.getEndpoint(2);
+		
+		sendHandler.start();
 	}
 	/* this is used to load the 'cris' library on application
      * startup. The library has already been unpacked into
@@ -77,13 +88,14 @@ public class CRISAndroid {
 			Thread.sleep(1000);
 			count++;
 		}
-		usbConnection.releaseInterface(intf);
+		usbConnection.releaseInterface(usbInterface);
 		usbConnection.close();
 		
 		if( sendHandler != null && sendHandler.isAlive() ){
 			sendHandler.interrupt();
 		}
 	}
+	// {2}
 	class SenderThread implements Runnable{
 		
 		@Override

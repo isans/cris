@@ -14,11 +14,6 @@ class iClebo : public CUnicycleRobot
 {
 	float wheel_base;
 public:
-	virtual void loadConfig_sensorSpecific(
-		//CConfigFileBase &configSource,
-		const std::string& section ){
-			//wheel_base	= configSource.read_float(section, "wheel_base", 0);
-	}
 	bool MoveDeltaB(double delta){ return true; }
 	bool TurnDeltaB(double delta){ return true; }
 	bool GoToPoseB(Pose target){ return GoToPositionB(Point(target.x, target.y), true, target.theta); }

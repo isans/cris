@@ -64,6 +64,7 @@ public:
 
     // 청소 상태
     int state;
+    int wall;
 };
 /**
  * <B>2D Pose in Rectangular Coordinates</B>

@@ -24,6 +24,7 @@ public:
 	virtual bool Stop(void){ return false; }
 	virtual bool SetLed(int which){ return false; }
 	virtual bool Command(int cmd){ return false; }
+
 	// blocking function
 	virtual bool MoveDeltaB(double delta){ return false; }
 	virtual bool TurnDeltaB(double delta){ return false; }
