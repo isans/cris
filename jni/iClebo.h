@@ -14,12 +14,22 @@ class iClebo : public CUnicycleRobot
 {
 	float wheel_base;
 public:
-	bool MoveDeltaB(double delta){
+	bool MoveDelta(double delta){
 		// code here
 		return true;
 	}
-	bool TurnDeltaB(double delta){
+	bool TurnDelta(double delta){
 		// code here
+		return true;
+	}
+	bool MoveDeltaB(double delta){
+		if (!(this->MoveDelta(delta))) return false;
+		// wait here
+		return true;
+	}
+	bool TurnDeltaB(double delta){
+		if (!(this->TurnDeltaB(delta))) return false;
+		// wait here
 		return true;
 	}
 	bool GoToPosition(Point target, bool isFinalTurn = false, double finalAngle = 0, bool isInitTurn = true){
